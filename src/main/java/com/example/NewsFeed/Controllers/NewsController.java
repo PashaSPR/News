@@ -48,8 +48,8 @@ public class NewsController {
     public String NewsById(@PathVariable(value = "id") long id, Model model) {
 
         if(repository.existsById(id)){
-            NewsPost post=repository.findById(id).get();
-            model.addAttribute("news",post);
+            NewsPost post=repository.findById(id).get();//отримання
+            model.addAttribute("post",post);
             return "showNew";
         }
         return "redirect:/news";
@@ -85,5 +85,10 @@ public class NewsController {
             repository.delete(post);
         }
         return "redirect:/news";
+    }
+    @GetMapping("/aboutUs")
+    public String About(Model model) {
+
+        return "aboutUs";
     }
 }
