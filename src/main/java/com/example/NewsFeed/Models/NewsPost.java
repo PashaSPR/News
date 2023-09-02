@@ -41,19 +41,19 @@ public class NewsPost {
         return id;
     }
 
-    public void setTitle() {
+    public void setTitle(String title) {
         this.title=title;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
+//    public void setDate(LocalDate date) {
+//        this.date = date;
+//    }
 
     public void setDate() {
         this.date=LocalDate.now();
     }
 
-    public void setText() {
+    public void setText(String text) {
         this.text=text;
     }
 

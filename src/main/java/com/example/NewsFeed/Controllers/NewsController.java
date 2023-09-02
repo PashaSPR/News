@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 
 @Controller
 public class NewsController {
@@ -23,6 +24,17 @@ public class NewsController {
         this.repository = repository;
     }
 
+//    @GetMapping("/")
+//    public String Feed( Model model) {
+//        Iterable<NewsPost> ICollectionNews=repository.findAll();
+//        ArrayList<NewsPost>  arrayListNews=new ArrayList<>();
+//        for (NewsPost item:ICollectionNews) {
+//            arrayListNews.add(item);
+//        }
+//        Collections.reverse(arrayListNews);
+//        model.addAttribute("News",arrayListNews);
+//        return "home";
+//    }
     @GetMapping("/news")
     public String News( Model model) {
         Iterable<NewsPost> ICollectionNews=repository.findAll();
@@ -59,23 +71,55 @@ public class NewsController {
 
         if(repository.existsById(id)){
             NewsPost post=repository.findById(id).get();
-            model.addAttribute("news",post);
+            model.addAttribute("post",post);
             return "updatenew";
         }
         return "redirect:/news";
     }
+
+//    @PostMapping("/news/{id}/update")
+//    public String UpdatePost(
+//            @PathVariable(value = "id") long id,
+//            @RequestParam String title,
+//            @RequestParam String text,
+//            Model model
+//    ) {
+//        if (repository.existsById(id)) {
+//            NewsPost post = repository.findById(id).get();
+//            post.setTitle(title); // Встановлюємо новий заголовок
+//            post.setText(text);   // Встановлюємо новий текст
+//            post.setDate(new Date()); // Оновлюємо дату, якщо потрібно
+//
+//            // Зберігаємо оновлені дані
+//            repository.save(post);
+//
+//            // Повертаємо на сторінку, яку ви вказали, наприклад, "updatenew"
+//            return "updatenew";
+//        }
+//
+//        // Якщо новина з вказаним id не знайдена, перенаправляємо на іншу сторінку
+//        return "redirect:/news";
+//    }
 
     @PostMapping("/news/{id}/update")
     public String UpdatePost(@PathVariable(value = "id") long id, @RequestParam String title,@RequestParam String text, Model model) {
 
         if(repository.existsById(id)){
             NewsPost post=repository.findById(id).get();
-            post.setTitle();
-            post.setText();
-            post.setDate();
-            return "updatenew";
+            post.setTitle(title); // Встановлюємо новий заголовок
+            post.setText(text);   // Встановлюємо новий текст
+            post.setDate(); // Оновлюємо дату, якщо потрібно
+
+            // Зберігаємо оновлені дані
+            repository.save(post);
+//            post.setTitle();
+//            post.setText();
+//            post.setDate();
+
+            // "updatenew";
+            return "redirect:/news";
         }
-        return "redirect:/news";
+        return "redirect:/";
     }
     @GetMapping("/news/{id}/delete")
     public String Delete(@PathVariable(value = "id") long id, Model model) {
